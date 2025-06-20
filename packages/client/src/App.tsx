@@ -1,10 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    fetch('/api') // The URL of your NestJS server
+      .then((res) => res.text())
+      .then((text) => setMessage(text))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <>
@@ -25,6 +33,7 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
+      <div>Message from server: "{message}"</div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
